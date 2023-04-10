@@ -162,7 +162,7 @@ function aws-session(){
 export FZF_DEFAULT_OPTS='--border --preview "bat {}" '
 export PATH="$PATH:$HOME/.config/composer/vendor/bin"
 
-export OPENAI_API_KEY="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"
+export OPENAI_API_KEY=""
 
 export GOPATH="$HOME/go"
 PATH="$GOPATH/bin:$PATH"
