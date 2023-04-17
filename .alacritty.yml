@@ -123,7 +123,7 @@ colors:
     text: "#2e3440"
     # cursor: '#d8dee9'
     # cursor: "#6ac0ff"
-    cursor: "#EDD96F"
+    cursor: "#ebcb8b"
   normal:
     black: "#3b4252"
     red: "#bf616a"
