@@ -115,7 +115,8 @@ custom_cursor_colors: true
 colors:
   primary:
     # background: '#2e3440'
-    background: "#2d353b"
+    background: "#303446"
+    # background: "#2d353b"
     # background: "#001B26"
     foreground: "#d8dee9"
     dim_foreground: "#a5abb6"
