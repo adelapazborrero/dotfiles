@@ -261,7 +261,7 @@ alias :q="exit"
 # APPLICATIONS
 alias v="/home/sombi/Tools/nvim-linux64/bin/nvim"
 alias t="tmux"
-alias store="~/Tools/pling-store-5.0.2-1-x86_64.AppImage"
+alias store="/home/sombi/Tools/pling-store-5.0.2-1-x86_64.AppImage"
 alias tree="lsd --tree"
 alias dc="docker-compose"
 alias dce="docker-compose exec"
@@ -294,6 +294,7 @@ alias dirsearch="python3 /home/sombi/Tools/dirsearch/dirsearch.py"
 alias sp="searchsploit"
 alias autonmap="sudo /home/sombi/Tools/autonmap"
 alias htb="sudo openvpn /home/sombi/vpn/lab_xsombi.ovpn"
+alias ss="/home/sombi/Tools/Flameshot-12.1.0.x86_64.AppImage"
 
 function serve() {
     # Black        0;30     Dark Gray     1;30
@@ -334,14 +335,59 @@ function setup() {
     cd "$1"
 
     mkdir exploits
+    mkdir exploits/foothold
+    mkdir exploits/privesc
+
     mkdir files
-    mkdir privesc-exploits
     mkdir payloads
+    mkdir requests
+
+    mkdir notes
+    mkdir notes/initial-enum
+    mkdir notes/initial-enum/scans
+    touch notes/initial-enum/scans/autonmap.md
+    touch notes/initial-enum/info.md
+    mkdir notes/post-enum
+    mkdir notes/post-enum/scans
+    touch notes/post-enum/info.md
 
     RED='\033[0;32m'
     NC='\033[0m' # No Color
 
     echo "${RED}[+] Created space for $1${NC}"
+}
+
+function scan() {
+    GREEN='\033[0;32m'
+    PURPLE='\033[0;35m'
+    NC='\033[0m'
+    ttl="$(ping -c 1 $1 | grep ttl | awk '{print $6}' |  sed s/ttl=//)"
+
+
+    if [[ -z "$ttl" ]]; then
+        echo -e "[?] Host is not responding, trying pinging"
+        return
+    fi
+
+    if [ $ttl -le 64 ]; then
+        echo -e "\n${GREEN}Target OS: ${PURPLE}LINUX${NC}"
+    else
+        echo -e "\n${GREEN}Target OS: ${PURPLE}WINDOWS${NC}"
+    fi
+
+    echo -e "\n${GREEN}[+] Starting scan on target\n${NC}"
+
+
+    sudo nmap -p- --open -sS --min-rate 5000 -vvv -n -Pn $1 -oG .tempPorts
+
+    ports="$(cat .tempPorts | grep -oP '\d{1,5}/open' | awk '{print $1}' FS='/' | xargs | tr ' ' ',')"
+    echo -e "\n${GREEN}[+] Running scan for open ports: ${PURPLE}$ports${NC}\n" >> .extractPorts.tmp
+
+    cat .extractPorts.tmp
+
+    sudo nmap -sCV -p$ports $1 -oN target-scan
+    rm -f .tempPorts
+    rm -f .extractPorts.tmp
 }
 
 function help(){
