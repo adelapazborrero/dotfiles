@@ -1,5 +1,7 @@
 # dotfiles
 
+Personal files for easy pulling
+
 [Extensions]
 - caffeine@patapon.info
 - focus-changer@heartmire
