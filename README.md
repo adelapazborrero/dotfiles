@@ -1,5 +1,10 @@
 # dotfiles
 
+For remaping keys in gnome
+```
+sudo apt update && sudo apt install input-remapper
+```
+
 Personal files for easy pulling
 
 [Extensions]
