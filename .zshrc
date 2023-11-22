@@ -1,24 +1,3 @@
-# PROMPT
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
-
-# Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
-
-ZSH_THEME="powerlevel10k/powerlevel10k"
-
-plugins=(
-  git
-  z
-  zsh-syntax-highlighting
-)
-
-source $ZSH/oh-my-zsh.sh
-
 export LANG=en_US.UTF-8
 
 # GIT ALIASES
@@ -31,27 +10,29 @@ alias gc="git checkout"
 alias glo="git log --oneline"
 alias gd="git diff ."
 alias gds="git diff --staged ."
+alias ask="gh copilot suggest"
+
 
 # SHORTCUT COMMANDS
 alias ports="sudo lsof -i -P -n | grep LISTEN"
-alias docker-down="sudo chmod 666 /var/run/docker.sock"
-alias win="tmux rename-window"
+alias winr="tmux rename-window"
+alias wins="tmux swap-window -t"
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias :q="exit"
 
 # APPLICATIONS
 alias v="nvim"
 alias t="tmux"
-alias store="~/Tools/pling-store-5.0.2-1-x86_64.AppImage"
+alias store="~/Tools/pling-store-5.0.2-1-x86_64.AppImage" # Linux only
 alias tree="lsd --tree"
-alias dc="docker-compose"
-alias dce="docker-compose exec"
 alias code="code . && exit"
-alias mk="microk8s kubectl"
-alias monkey="toipe"
-alias dclean="docker rmi $(docker images -a|grep "<none>"|awk '$1=="<none>" {print $3}')"
-alias stoplight="~/Tools/stoplight-studio-linux-x86_64.AppImage"
 alias act="~/Tools/act/bin/act"
+
+# DEVOPS
+alias dc="docker-compose"
+alias k="kubectl"
+alias kg="kubectl get"
+alias kc="kubectx"
 
 # OTHER
 # If broken icons [curl https://raw.githubusercontent.com/UTFeight/logo-ls-modernized/master/INSTALL | bash]
@@ -61,12 +42,11 @@ alias ll="logo-ls -la"
 alias config="nvim ~/.zshrc"
 alias sconfig="source ~/.zshrc"
 alias x="exit"
-alias open="xdg-open"
-alias restart-audio="systemctl restart --user pulseaudio"
-alias clear-cache="paccache -rk2 && paccache -ruk1 && paccache -rk2 -c ~/.cache/yay/*/ && paccache -ruk0 ~/.cache/yay/*/"
-alias anime="~/Tools/ani-cli/bin/ani-cli"
+alias open="xdg-open" # Linux only
+alias restart-audio="systemctl restart --user pulseaudio" # Linux only
+alias clear-cache="paccache -rk2 && paccache -ruk1 && paccache -rk2 -c ~/.cache/yay/*/ && paccache -ruk0 ~/.cache/yay/*/" # Arch only
 alias rice="curl -L rum.sh/ricebowl"
-alias notes="nvim ~/Documents/notes.md"
+alias notes="nvim ~/Documents/notes.norg"
 
 # CUSTOM FUNCTIONS
 function gri(){
@@ -89,50 +69,37 @@ function fmn() {
     ~/Tools/find-my-namespace/fmn $1 $2
 }
 
+function wins() {
+    tmux swap-window -t $1 && tmux select-window -t $1
+}
+
 function fmn-clear() {
     rm ~/.config/fmn.json
 }
-
-configure_prompt() {
-    prompt_symbol=㉿
-    # Skull emoji for root terminal
-    [ "$EUID" -eq 0 ] && prompt_symbol=💀
-    PROMPT=$'%F{%(#.blue.green)}┌──${debian_chroot:+($debian_chroot)─}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))─}(%B%F{%(#.red.blue)}%n'$prompt_symbol$'%m%b%F{%(#.blue.green)})-[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%b%F{%(#.blue.green)}]\n└─%B%(#.%F{red}#.%F{blue}$)%b%F{reset} '
-    # Right-side prompt with exit codes and background processes
-    RPROMPT=$'%(?.. %? %F{red}%B⨯%b%F{reset})%(1j. %j %F{yellow}%B⚙%b%F{reset}.)'
-    unset prompt_symbol
-}
-
 
 function fix-keys() {
     hidutil property --set '{"UserKeyMapping":[{"HIDKeyboardModifierMappingSrc":0x700000035,"HIDKeyboardModifierMappingDst":0x700000064},{"HIDKeyboardModifierMappingSrc":0x700000064,"HIDKeyboardModifierMappingDst":0x700000035}]}'
 }
 
-function local-db() {
-    pgcli postgres://cdn:pass4rd@localhost:5432/cdn
-}
-
 # export FZF_DEFAULT_COMMAND="nvim"
 export FZF_DEFAULT_OPTS='--border --preview "bat {}" '
 export PATH="$PATH:$HOME/.config/composer/vendor/bin"
-
-export OPENAI_API_KEY=""
+BAT_THEME="Catppuccin-frappe"
 
 # GOLANG
+export GOPROXY="https://artifactory.tools.bol.com/artifactory/go-bol/"
+export GOSUMDB="sum.golang.org https://artifactory.tools.bol.com/artifactory/sum-golang-org/"
+export GOPRIVATE="gitlab.bol.io"
 export GOPATH="$HOME/go"
 PATH="$GOPATH/bin:$PATH"
 
+# export NVM_DIR="$HOME/.nvm"
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-#source /usr/share/nvm/init-nvm.sh
+alias nvm="unalias nvm; [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"; nvm $@"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# Disable warning about zsh prompt
-# typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
-# neofetch --ascii --source ~/Projects/ascii/cat.txt --ascii_colors 3 5 6 2
 
 # RUBY
 export PATH="/usr/local/opt/ruby/bin:$PATH"
@@ -145,4 +112,23 @@ fi
 source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
 
+#BOL TOOLS
+export PATH="/Users/adelapazborrero/find-my-namespace:$PATH"
+export PATH="/usr/local/sbin:$PATH"
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+#export PATH="/Users/adelapazborrero/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
+
+# bun completions
+[ -s "/Users/adelapazborrero/.bun/_bun" ] && source "/Users/adelapazborrero/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
 source ~/.zsh/catppuccin_frappe-zsh-syntax-highlighting.zsh
+source ~/.config/z/zsh-z.plugin.zsh
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+eval "$(starship init zsh)"
