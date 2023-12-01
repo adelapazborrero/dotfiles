@@ -269,7 +269,6 @@ alias code="code . && exit"
 alias mk="microk8s kubectl"
 alias monkey="toipe"
 alias dclean="docker rmi $(docker images -a|grep "<none>"|awk '$1=="<none>" {print $3}')"
-alias stoplight="~/Tools/stoplight-studio-linux-x86_64.AppImage"
 alias act="~/Tools/act/bin/act"
 alias rustscan='docker run -it --rm --name rustscan rustscan/rustscan:2.1.1'
 alias covenant-create='docker run -it -p 7443:7443 -p 80:80 -p 443:443 --name covenant -v /home/sombi/Tools/Covenant/Covenant/Data:/app/Data covenant'
@@ -289,12 +288,22 @@ alias open="xdg-open"
 alias restart-audio="systemctl restart --user pulseaudio"
 alias clear-cache="paccache -rk2 && paccache -ruk1 && paccache -rk2 -c ~/.cache/yay/*/ && paccache -ruk0 ~/.cache/yay/*/"
 alias anime="~/Tools/ani-cli/bin/ani-cli"
-alias rice="curl -L rum.sh/ricebowl"
 alias dirsearch="python3 /home/sombi/Tools/dirsearch/dirsearch.py"
+alias gitleaks="/home/sombi/Tools/gitleaks/gitleaks"
 alias sp="searchsploit"
 alias autonmap="sudo /home/sombi/Tools/autonmap"
-alias htb="sudo openvpn /home/sombi/vpn/lab_xsombi.ovpn"
+alias incursore="sudo /home/sombi/Tools/incursore"
 alias ss="/home/sombi/Tools/Flameshot-12.1.0.x86_64.AppImage"
+
+function rice(){
+    curl -L rum.sh/ricebowl
+
+    GREEN='\033[0;32m'
+    NC='\033[0m' # No Color
+
+    echo "${GREEN} Break time ... ${NC}"
+
+}
 
 function serve() {
     # Black        0;30     Dark Gray     1;30
@@ -334,27 +343,20 @@ function setup() {
     
     cd "$1"
 
-    mkdir exploits
+    mkdir exploits files payloads requests scans
+
     mkdir exploits/foothold
     mkdir exploits/privesc
 
-    mkdir files
-    mkdir payloads
-    mkdir requests
+    mkdir payloads/foothold
+    mkdir payloads/privesc
 
-    mkdir notes
-    mkdir notes/initial-enum
-    mkdir notes/initial-enum/scans
-    touch notes/initial-enum/scans/autonmap.md
-    touch notes/initial-enum/info.md
-    mkdir notes/post-enum
-    mkdir notes/post-enum/scans
-    touch notes/post-enum/info.md
 
     RED='\033[0;32m'
     NC='\033[0m' # No Color
 
     echo "${RED}[+] Created space for $1${NC}"
+    lsd --tree .
 }
 
 function scan() {
@@ -390,7 +392,7 @@ function scan() {
     rm -f .extractPorts.tmp
 }
 
-share() {
+function share() {
   RED='\033[0;32m'
   NC='\033[0m' # No Color
 
@@ -440,6 +442,44 @@ share() {
   done
 }
 
+function forward-http() {
+    local subdomain=""
+    local parser_flag="parser"
+
+    while getopts ":s:" opt; do
+        case $opt in
+            s)
+                subdomain="$OPTARG"
+                ;;
+            \?)
+                echo "Invalid option: -$OPTARG"
+                echo "Usage: forward-http [-s <subdomain>] <port>"
+                return 1
+                ;;
+        esac
+    done
+
+    shift $((OPTIND-1))
+
+    if [ "$#" -ne 1 ]; then
+        echo "Usage: forward-http [-s <subdomain>] <port>"
+        return 1
+    fi
+
+    if [ -n "$subdomain" ]; then
+        parser_flag="$subdomain"
+    fi
+
+    ssh -R "${parser_flag}.serveo.net:80:localhost:$1" serveo.net
+}
+
+function forward-tcp(){
+     if [ "$#" -ne 1 ]; then
+        echo "Usage: forward-tcp <port>"
+        return 1
+     fi
+     ngrok tcp $1 
+}
 
 function help(){
     curl cheat.sh/$1
