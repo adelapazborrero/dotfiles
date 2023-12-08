@@ -26,8 +26,6 @@ bar=(
   font_smoothing=off
   topmost=off
   y_offset=10
-  # padding_left=15
-  # padding_right=15
   color=0x00000000
 )
 
@@ -47,21 +45,21 @@ default=(
   padding_right=5
   label.padding_left=4
   label.padding_right=15
-  icon.padding_left=15
-  icon.padding_right=15
+  icon.padding_left=10
+  icon.padding_right=10
 )
 
 sketchybar --default "${default[@]}"
 
-sketchybar --add item cat_icon left                         \
-           --set cat_icon icon=󰄛                            \
-                                 icon.color="$YELLOW"      \
-                                 padding_left=10            \
-                                 padding_right=10           \
-                                 label.drawing=off          \
-                                 background.color=$BACKGROUND \
-                                 background.corner_radius=5   \
-                                 background.height=30         \
+sketchybar --add item cat_icon left                             \
+           --set cat_icon icon=󱇶                                 \
+                                 icon.color="$BLUE"           \
+                                 padding_left=10                \
+                                 padding_right=10               \
+                                 label.drawing=off              \
+                                 background.color=$BACKGROUND   \
+                                 background.corner_radius=8     \
+                                 background.height=30           \
 
 ##### Adding Mission Control Space Indicators #####
 # Now we add some mission control spaces:
@@ -80,7 +78,7 @@ do
                               icon=${SPACE_ICONS[i]}                     \
                               background.corner_radius=5                 \
                               background.height=20                       \
-                              background.color=0x30ffffff               \
+                              background.color=0x30ffffff                \
                               background.drawing=off                     \
                               label.drawing=off                          \
                               script="$PLUGIN_DIR/space.sh"              \
@@ -93,10 +91,10 @@ done
 # only the properties deviating from the current defaults need to be set
 
 sketchybar --add item space_separator left                         \
-           --set space_separator icon=                            \
+           --set space_separator icon=                            \
                                  icon.color="$MAGENTA"             \
                                  padding_left=10                   \
-                                 padding_right=10                  \
+                                 padding_right=0                   \
                                  label.drawing=off                 \
                                                                    \
            --add item front_app left                               \
@@ -107,7 +105,7 @@ sketchybar --add item space_separator left                         \
 
 sketchybar --add bracket spaces "${spaces[@]}" space_separator front_app \
            --set spaces background.color=$BACKGROUND \
-                        background.corner_radius=5   \
+                        background.corner_radius=8   \
                         background.height=30         \
 
 ##### Adding Right Items #####
@@ -124,29 +122,44 @@ sketchybar --add bracket spaces "${spaces[@]}" space_separator front_app \
 sketchybar --add item clock right                              \
            --set clock   update_freq=10                        \
                          icon=󰅐                                \
+                         icon.padding_left=10                  \
+                         icon.padding_right=0                  \
                          script="$PLUGIN_DIR/clock.sh"         \
                          background.color="$BACKGROUND"        \
-                         background.corner_radius=5            \
+                         background.corner_radius=8            \
                                                                \
            --add item wifi right                               \
            --set wifi    script="$PLUGIN_DIR/wifi.sh"          \
                          icon=󰖩                                \
+                         icon.padding_left=10                  \
+                         icon.padding_right=0                  \
                          background.color="$BACKGROUND"        \
-                         background.corner_radius=5            \
+                         background.corner_radius=8            \
            --subscribe wifi wifi_change                        \
+                                                               \
+           --add item vpn right                                \
+           --set vpn  script="$PLUGIN_DIR/vpn.sh"              \
+                         icon.padding_left=10                  \
+                         icon.padding_right=0                  \
+                         background.color="$BACKGROUND"        \
+                         background.corner_radius=8            \
+           --subscribe vpn wifi_change                         \
                                                                \
            --add item volume right                             \
            --set volume  script="$PLUGIN_DIR/volume.sh"        \
+                         icon.padding_left=10                  \
+                         icon.padding_right=0                  \
                          background.color="$BACKGROUND"        \
-                         background.corner_radius=5            \
-                         label.drawing=off                     \
+                         background.corner_radius=8            \
            --subscribe volume volume_change                    \
                                                                \
            --add item battery right                            \
            --set battery script="$PLUGIN_DIR/battery.sh"       \
+                         icon.padding_left=10                  \
+                         icon.padding_right=0                  \
                          update_freq=120                       \
                          background.color="$BACKGROUND"        \
-                         background.corner_radius=5            \
+                         background.corner_radius=8            \
            --subscribe battery system_woke power_source_change
 
 ##### Finalizing Setup #####
