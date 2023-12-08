@@ -15,4 +15,4 @@ case $VOLUME in
   *) ICON="󰖁"
 esac
 
-sketchybar --set $NAME icon="$ICON"
+sketchybar --set $NAME icon="$ICON" label="$VOLUME%"
