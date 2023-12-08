@@ -10,19 +10,19 @@ if [ $PERCENTAGE = "" ]; then
 fi
 
 case ${PERCENTAGE} in
-  9[0-9]|100) ICON="" COLOR=$GREEN
+  9[0-9]|100) ICON="󰁹" COLOR=$GREEN
   ;;
-  [6-8][0-9]) ICON="" COLOR=$GREEN
+  [6-8][0-9]) ICON="󰂁" COLOR=$GREEN
   ;;
-  [3-5][0-9]) ICON="" COLOR=$GREEN
+  [3-5][0-9]) ICON="󰁾" COLOR=$GREEN
   ;;
-  [1-2][0-9]) ICON="" COLOR=$SELECTION_FOREGROUND
+  [1-2][0-9]) ICON="󰁻" COLOR=$SELECTION_FOREGROUND
   ;;
-  *) ICON="" COLOR=$RED
+  *) ICON="󰁺" COLOR=$RED
 esac
 
 if [[ $CHARGING != "" ]]; then
-  ICON="" COLOR=$SELECTION_FOREGROUND
+  ICON="󰂄" COLOR=$SELECTION_FOREGROUND
 fi
 
 # The item invoking this script (name $NAME) will get its icon and label
