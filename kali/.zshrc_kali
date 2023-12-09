@@ -473,6 +473,10 @@ function forward-http() {
     ssh -R "${parser_flag}.serveo.net:80:localhost:$1" serveo.net
 }
 
+function rev-pw() {
+    python3 ~/Tools/encoder.py $1 $2
+}
+
 function forward-tcp(){
      if [ "$#" -ne 1 ]; then
         echo "Usage: forward-tcp <port>"
@@ -504,3 +508,4 @@ export PATH="/home/sombi/.local/bin:$PATH"
 export LD_LIBRARY_PATH=/usr/lib/oracle/19.6/client64/lib/:$LD_LIBRARY_PATH
 
 source ~/Tools/z.sh
+eval "$(starship init zsh)"
