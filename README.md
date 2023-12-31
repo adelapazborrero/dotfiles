@@ -31,6 +31,11 @@ Personal files for easy pulling
 - showmethetext@Guleri24.github.com
 
 ### Mate desktop setup
+Icons [https://www.wallpapertip.com/wpic/bJmxhh_mr-robot-elliot-pc/](https://www.mate-look.org/p/1012151)
+Wallpaper https://www.wallpapertip.com/wpic/bJmxhh_mr-robot-elliot-pc/
+Theme https://www.mate-look.org/p/1013477
+Window borders https://github.com/adelapazborrero/DarkRobot
+
 ```
 sudo apt install mate-desktop-environment
 sudo apt install mate-desktop-environment-extras
