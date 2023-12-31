@@ -29,3 +29,19 @@ Personal files for easy pulling
 - workspace-indicator@gnome-shell-extensions.gcampax.github.com
 - tun0-ip-address@adamantisspinae.github.com
 - showmethetext@Guleri24.github.com
+
+### Mate desktop setup
+```
+sudo apt install mate-desktop-environment
+sudo apt install mate-desktop-environment-extras
+sudo apt install lightdm lightdm-gtk-greeter
+sudo apt-get install lightdm-gtk-greeter-settings
+
+sudo update-alternatives --config x-session-manager
+
+sudo apt purge --autoremove kali-desktop-xfce
+
+cp icons /usr/share/icons/
+cp theme /usr/share/themes/
+cp background /usr/share/desktop-base/kali-theme/login/background
+```
