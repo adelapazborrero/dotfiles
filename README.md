@@ -50,3 +50,12 @@ cp icons /usr/share/icons/
 cp theme /usr/share/themes/
 cp background /usr/share/desktop-base/kali-theme/login/background
 ```
+
+### Firefox setup
+1. Type `about:config`
+2. Enable `toolkit.legacyUserProfileCustomizations.stylesheets`
+3. Type `about:support`
+4. Go to your `Profile Directory`
+5. Add `https://github.com/Aris-t2/CustomCSSforFx/tree/master/current` to `chrome` (create folder if not exists)
+6. Restart firefox
+
