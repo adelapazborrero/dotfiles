@@ -59,3 +59,18 @@ cp background /usr/share/desktop-base/kali-theme/login/background
 5. Add `https://github.com/Aris-t2/CustomCSSforFx/tree/master/current` to `chrome` (create folder if not exists)
 6. Restart firefox
 
+### Linux battery life
+Update packages
+```
+sudo apt update
+```
+
+Install tlp
+```
+sudo apt install tlp tlp-rdw
+```
+
+Enable daemon
+```
+sudo systemctl enable tlp.service
+```
