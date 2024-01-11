@@ -74,3 +74,11 @@ Enable daemon
 ```
 sudo systemctl enable tlp.service
 ```
+
+### For mate destop small resolution
+```
+xrandr --output DP-2 --mode 3840x2160 --scale 1x1
+gsettings set org.mate.interface window-scaling-factor 1
+gsettings set org.mate.font-rendering dpi 128
+echo "For firefox open about:config, set layout.css.devPixelsPerPx to 1.4"
+```
