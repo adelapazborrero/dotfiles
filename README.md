@@ -49,6 +49,9 @@ sudo apt purge --autoremove kali-desktop-xfce
 cp icons /usr/share/icons/
 cp theme /usr/share/themes/
 cp background /usr/share/desktop-base/kali-theme/login/background
+
+sudo apt-get -y install aptitude
+sudo aptitude -y install mate-tweak
 ```
 
 ### Firefox setup
