@@ -392,54 +392,49 @@ function scan() {
     rm -f .extractPorts.tmp
 }
 
-function share() {
-  RED='\033[0;32m'
-  NC='\033[0m' # No Color
+function scanAll() {
+    GREEN='\033[0;32m'
+    PURPLE='\033[0;35m'
+    NC='\033[0m'
+    ttl="$(ping -c 1 $1 | grep ttl | awk '{print $6}' |  sed s/ttl=//)"
 
-  # Initialize an array to store the interface information
-  interfaces=()
-  # Show IPs and populate the array
-  echo "${RED}[+] Select interface${NC}"
-  while IFS= read -r line; do
-    interfaces+=("$line")
-  done < <(ip r | grep " link " | cut -d " " -f 3,9)
-
-  PS3="(1-${#interfaces[@]})  "
-  select selected_interface in "${interfaces[@]}"; do
-    if [[ -n $selected_interface ]]; then
-      selected_ip=$(echo "$selected_interface" | awk '{print $NF}')
-      break
-    else
-      echo "Invalid choice. Please choose a number between 1 and ${#interfaces[@]}."
+    if [[ -z "$ttl" ]]; then
+        echo -e "[?] Host is not responding, trying pinging"
+        return
     fi
-  done
+
+    if [ $ttl -le 64 ]; then
+        echo -e "\n${GREEN}Target OS: ${PURPLE}LINUX${NC}"
+    else
+        echo -e "\n${GREEN}Target OS: ${PURPLE}WINDOWS${NC}"
+    fi
+
+    echo -e "\n${GREEN}[+] Starting TCP scan on target\n${NC}"
+
+    # Quick TCP Scan
+    sudo nmap -p- --open -sS --min-rate 5000 -vvv -n -Pn $1 -oG .tempPorts
+
+    ports_tcp="$(cat .tempPorts | grep -oP '\d{1,5}/open' | awk '{print $1}' FS='/' | xargs | tr ' ' ',')"
+    echo -e "\n${GREEN}[+] Running quick TCP scan for open ports: ${PURPLE}$ports_tcp${NC}\n" >> .extractPorts.tmp
+
+    # Version Detection for TCP
+    sudo nmap -sCV -p$ports_tcp $1 -oN target-scan-tcp
 
 
-  echo "\n${RED}[+] Select target OS${NC}"
-  PS3="(1-2)  "
-  select target_os in "Windows" "Linux"; do
-    case $target_os in
-      "Windows")
-        echo "\n${RED}[+] Current files${NC}"
-        echo
-        find . -type f | awk -F/ '{print "certutil -urlcache -f http://'$selected_ip'/" $NF}'
-        echo "\n${RED}[+] Starting server...${NC}"
-        sudo python3 -m http.server 80
-        break
-        ;;
-      "Linux")
-        echo "\n${RED}[+] Current files${NC}"
-        echo
-        find . -type f | awk -F/ '{print "wget http://'$selected_ip'/" $NF}'
-        echo "\n${RED}[+] Starting server...${NC}"
-        sudo python3 -m http.server 80
-        break
-        ;;
-      *)
-        echo "Invalid choice for target OS. Please 1 or 2 in the selection"
-        ;;
-    esac
-  done
+    echo -e "\n${GREEN}[+] Starting UDP scan on target\n${NC}"
+    # Quick UDP Scan
+    sudo nmap -sU -p- --min-rate 5000 -vv -n $1 -oG .tempPorts_udp
+
+    ports_udp="$(cat .tempPorts_udp | grep -oP '\d{1,5}/open' | awk '{print $1}' FS='/' | xargs | tr ' ' ',')"
+    echo -e "\n${GREEN}[+] Running quick UDP scan for open ports: ${PURPLE}$ports_udp${NC}\n" >> .extractPorts.tmp
+
+    # Version Detection for UDP
+    sudo nmap -sCV -sU -p$ports_udp $1 -oN target-scan-udp
+
+    # cat .extractPorts.tmp
+    rm -f .tempPorts
+    rm -f .tempPorts_udp
+    rm -f .extractPorts.tmp
 }
 
 function forward-http() {
