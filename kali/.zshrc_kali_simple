@@ -104,7 +104,7 @@ configure_prompt() {
         oneline)
             # PROMPT=$'${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%B%F{%(#.red.blue)}%n@%m%b%F{reset}:%B%F{%(#.blue.green)}%~%b%F{reset}%(#.#.$) '
             # PROMPT=$'${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%B%F{%(#.red.red)}%n%F{reset} %B%F{%(#.blue.blue)}%~%b%F{reset} %(#.#.$) '
-            PROMPT=$'${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%B%F{%(#.white.white)}%n%F{reset} %B%F{%(#.white.white)}%~ # '
+            PROMPT=$'${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%B%F{%(#.white.white)}%n%F{reset} %B%F{%(#.white.white)}%~ #%b%F{reset} '
             RPROMPT=
             ;;
         backtrack)
@@ -283,9 +283,13 @@ alias covenant='docker start covenant -ai'
 # OTHER
 # If broken icons [curl https://raw.githubusercontent.com/UTFeight/logo-ls-modernized/master/INSTALL | bash]
 # Go is needed before this installation
-alias l="ls -l"
-alias ll="ls -la"
-alias dir="ls -l"
+# alias l="ls -l"
+# alias ll="ls -la"
+# alias dir="ls -l"
+
+alias l="logo-ls -l --disable-color"
+alias ll="logo-ls -la --disable-color"
+alias dir="logo-ls -l --disable-color"
 
 alias config="v ~/.zshrc"
 alias sconfig="source ~/.zshrc"
@@ -560,4 +564,3 @@ export LD_LIBRARY_PATH=/usr/lib/oracle/19.6/client64/lib/:$LD_LIBRARY_PATH
 
 source ~/Tools/z.sh
 # eval "$(starship init zsh)"
-
