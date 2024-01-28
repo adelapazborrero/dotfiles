@@ -85,3 +85,13 @@ gsettings set org.mate.interface window-scaling-factor 1
 gsettings set org.mate.font-rendering dpi 128
 echo "For firefox open about:config, set layout.css.devPixelsPerPx to 1.4"
 ```
+
+### VMware on kali
+
+Download vmware player 
+https://www.vmware.com/uk/products/workstation-player.html
+
+Add missing packages
+```
+sudo apt install -y build-essential linux-headers-$( uname -r ) vlan libaio1
+```
