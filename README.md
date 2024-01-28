@@ -95,3 +95,8 @@ Add missing packages
 ```
 sudo apt install -y build-essential linux-headers-$( uname -r ) vlan libaio1
 ```
+
+Activation for VM
+```
+https://github.com/massgravel/Microsoft-Activation-Scripts
+```
