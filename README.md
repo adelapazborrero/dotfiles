@@ -100,3 +100,6 @@ Activation for VM
 ```
 https://github.com/massgravel/Microsoft-Activation-Scripts
 ```
+
+### RGB linux
+https://alternativeto.net/software/openrgb/about/
