@@ -78,6 +78,19 @@ Enable daemon
 sudo systemctl enable tlp.service
 ```
 
+Checking battery health
+```
+upower -e
+upower -i /org/freedesktop/UPower/devices/battery_BAT1
+```
+Have a look at `energy-full` and `energy-full-design`, if change is significant is time to update.
+
+```
+acpi -V
+```
+Loot at `Thermal`, `desicn capacity` and `last full capacity`
+
+
 ### For mate destop small resolution
 ```
 xrandr --output DP-2 --mode 3840x2160 --scale 1x1
