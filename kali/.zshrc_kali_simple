@@ -104,7 +104,7 @@ configure_prompt() {
         oneline)
             # PROMPT=$'${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%B%F{%(#.red.blue)}%n@%m%b%F{reset}:%B%F{%(#.blue.green)}%~%b%F{reset}%(#.#.$) '
             # PROMPT=$'${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%B%F{%(#.red.red)}%n%F{reset} %B%F{%(#.blue.blue)}%~%b%F{reset} %(#.#.$) '
-            PROMPT=$'${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%B%F{%(#.white.white)}%n%F{reset} %B%F{%(#.white.white)}%~ #%b%F{reset} '
+            PROMPT=$'${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%F{%(#.white.white)}%n%F{reset} %F{%(#.white.white)}%~ #%b%F{reset} '
             RPROMPT=
             ;;
         backtrack)
@@ -259,15 +259,16 @@ alias docker-down="sudo chmod 666 /var/run/docker.sock"
 alias win="tmux rename-window"
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias :q="exit"
-alias rdpass="python3 /home/sombi/Tools/RDPassSpray/RDPassSpray.py"
+alias rdpass="python3 /home/typ0/Tools/RDPassSpray/RDPassSpray.py"
 alias cme="crackmapexec"
 
 # APPLICATIONS
-alias v="/home/sombi/Tools/nvim-linux64/bin/nvim"
-alias notes="/home/sombi/Tools/nvim-linux64/bin/nvim ~/Tools/oscp-cheatsheet"
-alias gomapexec="/home/sombi/Tools/Go_Map_Exec/go_map_exec"
+alias v="/home/typ0/Tools/nvim-linux64/bin/nvim"
+alias notes="/home/typ0/Tools/nvim-linux64/bin/nvim ~/Tools/oscp-cheatsheet"
+alias notes-wifi="/home/typ0/Tools/nvim-linux64/bin/nvim ~/Tools/oswp-cheatsheet"
+alias gomapexec="/home/typ0/Tools/Go_Map_Exec/go_map_exec"
 alias t="tmux"
-alias store="/home/sombi/Tools/pling-store-5.0.2-1-x86_64.AppImage"
+alias store="/home/typ0/Tools/pling-store-5.0.2-1-x86_64.AppImage"
 alias tree="lsd --tree"
 alias dc="docker-compose"
 alias dce="docker-compose exec"
@@ -277,7 +278,7 @@ alias monkey="toipe"
 alias dclean="docker rmi $(docker images -a|grep "<none>"|awk '$1=="<none>" {print $3}')"
 alias act="~/Tools/act/bin/act"
 alias rustscan='docker run -it --rm --name rustscan rustscan/rustscan:2.1.1'
-alias covenant-create='docker run -it -p 7443:7443 -p 80:80 -p 443:443 --name covenant -v /home/sombi/Tools/Covenant/Covenant/Data:/app/Data covenant'
+alias covenant-create='docker run -it -p 7443:7443 -p 80:80 -p 443:443 --name covenant -v /home/typ0/Tools/Covenant/Covenant/Data:/app/Data covenant'
 alias covenant='docker start covenant -ai'
 
 # OTHER
@@ -298,14 +299,14 @@ alias open="xdg-open"
 alias restart-audio="systemctl restart --user pulseaudio"
 alias clear-cache="paccache -rk2 && paccache -ruk1 && paccache -rk2 -c ~/.cache/yay/*/ && paccache -ruk0 ~/.cache/yay/*/"
 alias anime="~/Tools/ani-cli/bin/ani-cli"
-alias dirsearch="python3 /home/sombi/Tools/dirsearch/dirsearch.py"
-alias gitleaks="/home/sombi/Tools/gitleaks/gitleaks"
+alias dirsearch="python3 /home/typ0/Tools/dirsearch/dirsearch.py"
+alias gitleaks="/home/typ0/Tools/gitleaks/gitleaks"
 alias sp="searchsploit"
-alias autonmap="sudo /home/sombi/Tools/autonmap"
-alias incursore="sudo /home/sombi/Tools/incursore"
-alias ss="/home/sombi/Tools/Flameshot-12.1.0.x86_64.AppImage"
-alias keepass-push="rclone sync /home/sombi/custom/keepass.kdbx driver:linux/"
-alias keepass-pull="rclone sync driver:linux/keepass.kdbx /home/sombi/custom/keepass.kdbx"
+alias autonmap="sudo /home/typ0/Tools/autonmap"
+alias incursore="sudo /home/typ0/Tools/incursore"
+alias ss="/home/typ0/Tools/Flameshot-12.1.0.x86_64.AppImage"
+alias keepass-push="rclone sync /home/typ0/custom/keepass.kdbx driver:linux/"
+alias keepass-pull="rclone sync driver:linux/keepass.kdbx /home/typ0/custom/keepass.kdbx"
 
 function rice(){
     curl -L rum.sh/ricebowl
@@ -557,10 +558,9 @@ if [ -f /etc/zsh_command_not_found ]; then
 fi
 
 export PATH=$PATH:/usr/local/go/bin
-export PATH=$PATH:/home/sombi/go/bin
-export PATH="/home/sombi/.local/bin:$PATH"
+export PATH=$PATH:/home/typ0/go/bin
+export PATH="/home/typ0/.local/bin:$PATH"
 
 export LD_LIBRARY_PATH=/usr/lib/oracle/19.6/client64/lib/:$LD_LIBRARY_PATH
 
 source ~/Tools/z.sh
-# eval "$(starship init zsh)"
