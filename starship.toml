@@ -1,31 +1,48 @@
 palette = "catppuccin_frappe"
 
 format = """
-[](fg:surface2)\
-[ 󱐌 ](bg:surface2 fg:yellow)\
-[](fg:surface2 bg:blue)\
+[┌─\\(](fg:green)\
+[typ0 ㉿legion](fg:blue)\
+[\\)─](fg:green)\
+[\\[](fg:green)\
 $directory\
-[](fg:blue bg:green)\
+[\\]](fg:green)\
 $git_branch\
 $git_status\
-[ ](green)\
 $nodejs\
 $rust\
 $golang\
 $python\
 $php\
-\n$character"""
+\n[└─](fg:green)\
+$character"""
+
+# format = """
+# [](fg:surface2)\
+# [ typ0 ](bg:surface2 fg:blue)\
+# [](fg:surface2 bg:blue)\
+# $directory\
+# [](fg:blue bg:green)\
+# $git_branch\
+# $git_status\
+# [ ](green)\
+# $nodejs\
+# $rust\
+# $golang\
+# $python\
+# $php\
+# \n$character"""
 
 add_newline = true
 
 [character]
-success_symbol = "[󱞩](green)"
-error_symbol = "[󱞩](red)"
+success_symbol = "[\\$](blue)"
+error_symbol = "[\\$](red)"
 vimcmd_symbol = "[❮](green)"
 
 [directory]
-style = "fg:surface0 bg:blue"
-format = "[ $path ]($style)"
+style = "fg:white"
+format = "[$path]($style)"
 truncation_length = 3
 truncation_symbol = "~/"
 
@@ -37,12 +54,12 @@ truncation_symbol = "~/"
 
 [git_branch]
 symbol = ""
-style = "bg:green"
-format = '[[ $symbol $branch ](fg:surface1 bg:green)]($style)'
+style = "fg:green"
+format = '[[ $symbol $branch ](fg:green)]($style)'
 
 [git_status]
-style = "bg:green"
-format = '[[($all_status$ahead_behind )](fg:surface2 bg:green)]($style)'
+# style = "bg:green"
+format = '[[($all_status$ahead_behind )](fg:green)]($style)'
 
 [nodejs]
 symbol = ""
