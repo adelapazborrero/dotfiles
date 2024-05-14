@@ -63,6 +63,8 @@ sudo aptitude -y install mate-tweak
 6. Restart firefox
 
 ### Linux battery life
+Other new tools https://github.com/AdnanHodzic/auto-cpufreq?tab=readme-ov-file#installing-auto-cpufreq
+
 Update packages
 ```
 sudo apt update
