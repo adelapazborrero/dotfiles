@@ -1,3 +1,4 @@
+
 # ~/.zshrc file for zsh interactive shells.
 # see /usr/share/doc/zsh/examples/zshrc for examples
 
@@ -102,13 +103,11 @@ configure_prompt() {
             #RPROMPT=$'%(?.. %? %F{red}%B⨯%b%F{reset})%(1j. %j %F{yellow}%B⚙%b%F{reset}.)'
             ;;
         oneline)
-            # PROMPT=$'${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%B%F{%(#.red.blue)}%n@%m%b%F{reset}:%B%F{%(#.blue.green)}%~%b%F{reset}%(#.#.$) '
-            # PROMPT=$'${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%B%F{%(#.red.red)}%n%F{reset} %B%F{%(#.blue.blue)}%~%b%F{reset} %(#.#.$) '
-            PROMPT=$'${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%F{%(#.white.white)}%n%F{reset} %F{%(#.white.white)}%~ #%b%F{reset} '
+            PROMPT=$'${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%B%F{%(#.red.blue)}%n@%m%b%F{reset}:%B%F{%(#.blue.green)}%~%b%F{reset}%(#.#.$) '
             RPROMPT=
             ;;
         backtrack)
-            PROMPT=$'${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%B%F{red}%n %B%F{blue}%~%b%F{reset} %(#.#.$) '
+            PROMPT=$'${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%B%F{red}%n@%m%b%F{reset}:%B%F{blue}%~%b%F{reset}%(#.#.$) '
             RPROMPT=
             ;;
     esac
@@ -175,7 +174,7 @@ if [ "$color_prompt" = yes ]; then
         ZSH_HIGHLIGHT_STYLES[cursor-matchingbracket]=standout
     fi
 else
-    PROMPT='${debian_chroot:+($debian_chroot)}%n %~ %(#.#.$) '
+    PROMPT='${debian_chroot:+($debian_chroot)}%n@%m:%~%(#.#.$) '
 fi
 unset color_prompt force_color_prompt
 
@@ -219,7 +218,7 @@ if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     export LS_COLORS="$LS_COLORS:ow=30;44:" # fix ls color for folders with 777 permissions
 
-    alias ls='ls'
+    alias ls='ls --color=auto'
     #alias dir='dir --color=auto'
     #alias vdir='vdir --color=auto'
 
@@ -240,6 +239,23 @@ if [ -x /usr/bin/dircolors ]; then
     # Take advantage of $LS_COLORS for completion as well
     zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
     zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
+fi
+
+# some more ls aliases
+alias ll='ls -l'
+alias la='ls -A'
+alias l='ls -CF'
+
+# enable auto-suggestions based on the history
+if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+    . /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+    # change suggestion color
+    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#999'
+fi
+
+# enable command-not-found if installed
+if [ -f /etc/zsh_command_not_found ]; then
+    . /etc/zsh_command_not_found
 fi
 
 # GIT ALIASES
@@ -263,9 +279,8 @@ alias rdpass="python3 /home/typ0/Tools/RDPassSpray/RDPassSpray.py"
 alias cme="crackmapexec"
 
 # APPLICATIONS
-alias v="/home/typ0/Tools/nvim-linux64/bin/nvim"
-alias notes="/home/typ0/Tools/nvim-linux64/bin/nvim ~/Tools/oscp-cheatsheet"
-alias notes-wifi="/home/typ0/Tools/nvim-linux64/bin/nvim ~/Tools/oswp-cheatsheet"
+alias v="nvim"
+alias notes="nvim ~/Tools/pentest-notes"
 alias gomapexec="/home/typ0/Tools/Go_Map_Exec/go_map_exec"
 alias t="tmux"
 alias store="/home/typ0/Tools/pling-store-5.0.2-1-x86_64.AppImage"
@@ -543,6 +558,45 @@ function forward-tcp(){
 
 function help(){
     curl cheat.sh/$1
+}
+
+
+function encode() {
+    local prepend_c="powershell -w hidden -enc"
+    local prepend_l="C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
+    local str=""
+    local flag=""
+
+    # Parse arguments
+    while [[ $# -gt 0 ]]; do
+        case $1 in
+            -c)
+                flag="prepend_c"
+                shift # Move to the next argument
+                ;;
+            -l)
+                flag="prepend_l"
+                shift # Move to the next argument
+                ;;
+            *)
+                str="$1"
+                shift
+                ;;
+        esac
+    done
+
+    # Perform encoding
+    local base64_str
+    base64_str=$(echo -n "$str" | iconv -t UTF-16LE | base64 -w 0)
+
+    # Output result based on flag
+    if [[ "$flag" == "prepend_c" ]]; then
+        printf "%s %s\n" "$prepend_c" "$base64_str"
+    elif [[ "$flag" == "prepend_l" ]]; then
+        printf "%s -EncodedCommand %s\n" "$prepend_l" "$base64_str"
+    else
+        printf "%s\n" "$base64_str"
+    fi
 }
 
 # enable auto-suggestions based on the history
