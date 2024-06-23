@@ -104,7 +104,7 @@ echo "For firefox open about:config, set layout.css.devPixelsPerPx to 1.4"
 ### VMware on kali
 
 Download vmware workstation
-https://www.vmware.com/uk/products/workstation-player.html
+[https://www.vmware.com/uk/products/workstation-player.html](https://support.broadcom.com/group/ecx/productfiles?subFamily=VMware%20Workstation%20Pro&displayGroup=VMware%20Workstation%20Pro%2017.0%20for%20Personal%20Use%20(Linux)&release=17.5.2&os=&servicePk=520450&language=EN)
 
 Add missing packages
 ```
