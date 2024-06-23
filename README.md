@@ -103,12 +103,19 @@ echo "For firefox open about:config, set layout.css.devPixelsPerPx to 1.4"
 
 ### VMware on kali
 
-Download vmware player 
+Download vmware workstation
 https://www.vmware.com/uk/products/workstation-player.html
 
 Add missing packages
 ```
 sudo apt install -y build-essential linux-headers-$( uname -r ) vlan libaio1
+```
+For missing vmnet modules follow these lines from kernel
+```bash
+sudo nvim /usr/src/linux-headers-6.8.11-amd64/scripts/Makefile.modfinal
+-ifdef CONFIG_DEBUG_INFO_BTF_MODULES
+-        +$(if $(newer-prereqs),$(call cmd,btf_ko))
+-endif
 ```
 
 Activation for VM
