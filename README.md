@@ -125,3 +125,7 @@ https://github.com/massgravel/Microsoft-Activation-Scripts
 
 ### RGB linux
 https://alternativeto.net/software/openrgb/about/
+
+### Windows GCC
+https://sourceforge.net/projects/tdm-gcc/
+Add `C:\TDM-GCC-64\bin` to the `PATH` Environment variable
