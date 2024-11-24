@@ -129,3 +129,12 @@ https://alternativeto.net/software/openrgb/about/
 ### Windows GCC
 https://sourceforge.net/projects/tdm-gcc/
 Add `C:\TDM-GCC-64\bin` to the `PATH` Environment variable
+
+### Windows Installation scripts
+
+https://github.com/elitekamrul/MAS
+```powershell
+irm https://elite.kamrul.us/get | iex
+# or
+irm https://massgrave.dev/get | iex
+```
