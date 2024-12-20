@@ -1,0 +1,20 @@
+set ideajoin
+set clipboard+=unnamed
+
+# GIT
+nmap ;g :action Vcs.ShowDiffChangedLines<CR>
+nmap gr :action Vcs.RollbackChangedLines<CR>
+nmap gt :action Vcs.ShowDiffWithLocal.Before<CR>
+
+# NAVIGATION
+nmap [g :action GotoPreviousError<CR>
+nmap ]g :action GotoNextError<CR>
+nmap vs :action SplitVertically<CR>
+nmap ;f :action GotoFile<CR>
+nmap ;r :action FindInPath<CR>
+nmap wl :action NextSplitter<CR>
+nmap wh :action PrevSplitter<CR>
+
+# UTILS
+vmap gc :action CommentByLineComment<CR><ESC>
+nmap gcc :action CommentByLineComment<CR>k
