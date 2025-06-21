@@ -2,7 +2,7 @@ palette = "catppuccin_frappe"
 
 format = """
 [┌─\\(](fg:green)\
-[typ0 ㉿legion](fg:blue)\
+[adelapaz ㉿workstation](fg:blue)\
 [\\)─](fg:green)\
 [\\[](fg:green)\
 $directory\
@@ -62,7 +62,7 @@ format = '[[ $symbol $branch ](fg:green)]($style)'
 format = '[[($all_status$ahead_behind)](fg:green)]($style)'
 
 [nodejs]
-symbol = ""
+symbol = ""
 style = "bg:blue"
 format = '[[ $symbol ($version) ](fg:blue)]($style)'
 
@@ -87,6 +87,7 @@ style = "bg:blue"
 format = '[[ $symbol ($version) ](fg:blue)]($style)'
 
 [gcloud]
+symbol = ""
 format = '[$symbol$active]($style) '
 style = 'bold yellow'
 
