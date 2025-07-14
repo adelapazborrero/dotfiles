@@ -114,8 +114,27 @@ playyt() {
     mpv --no-video --ytdl-format=bestaudio "$URL"
 }
 
-function gri(){
-    git rebase -i HEAD~$1
+function gri() {
+    if [ -z "$1" ]; then
+        echo "Usage: gri <number_of_commits_to_reset>"
+        return 1
+    fi
+
+    git reset --soft HEAD~$1
+    git commit
+
+    read -p "Do you want to push with --force-with-lease? [Y/n] " confirm
+    case "$confirm" in
+        [Yy]|"")
+            git push --force-with-lease
+            ;;
+        [Nn])
+            echo "Push aborted."
+            ;;
+        *)
+            echo "Invalid input. Push aborted."
+            ;;
+    esac
 }
 
 function help(){
