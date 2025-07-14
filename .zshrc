@@ -113,7 +113,6 @@ playyt() {
     echo "▶️ Now playing: $CHOICE"
     mpv --no-video --ytdl-format=bestaudio "$URL"
 }
-
 function gri() {
     if [ -z "$1" ]; then
         echo "Usage: gri <number_of_commits_to_reset>"
@@ -123,7 +122,9 @@ function gri() {
     git reset --soft HEAD~$1
     git commit
 
-    read -p "Do you want to push with --force-with-lease? [Y/n] " confirm
+    # Flush input buffer just in case, then read
+    echo
+    read -r -p "Do you want to push with --force-with-lease? [Y/n] " confirm
     case "$confirm" in
         [Yy]|"")
             git push --force-with-lease
