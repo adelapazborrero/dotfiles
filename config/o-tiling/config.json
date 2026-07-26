@@ -1,0 +1,13 @@
+{
+  "float": [
+    {
+      "class": "o-tiling-example",
+      "title": "o-tiling-example"
+    },
+    {
+      "class": "io\\.github\\.bugaevc\\.wl-clipboard"
+    }
+  ],
+  "skiptaskbarhidden": [],
+  "log_on_focus": false
+}

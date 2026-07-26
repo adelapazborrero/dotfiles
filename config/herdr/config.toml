@@ -1,0 +1,9 @@
+onboarding = false
+
+[theme]
+name = "catppuccin"
+auto_switch = false
+
+[keys]
+next_workspace = "prefix+ctrl+j"
+previous_workspace = "prefix+ctrl+k"

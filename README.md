@@ -1,140 +1,120 @@
 # dotfiles
 
-For remaping keys in gnome
-```
-sudo apt update && sudo apt install input-remapper
-```
+Personal configuration for a Fedora/GNOME workstation — zsh, Kitty, herdr,
+Neovim, Starship and friends.
 
-Personal files for easy pulling
-
-[Extensions]
-- caffeine@patapon.info
-- focus-changer@heartmire
-- blur-my-shell@aunetx
-- logomenu@aryan_k
-- ubuntu-appindicators@ubuntu.com
-- dash-to-dock@micxgx.gmail.com
-- ding@rastersoft.com
-- tiling-assistant@leleat-on-github
-- apps-menu@gnome-shell-extensions.gcampax.github.com
-- auto-move-windows@gnome-shell-extensions.gcampax.github.com
-- drive-menu@gnome-shell-extensions.gcampax.github.com
-- launch-new-instance@gnome-shell-extensions.gcampax.github.com
-- native-window-placement@gnome-shell-extensions.gcampax.github.com
-- places-menu@gnome-shell-extensions.gcampax.github.com
-- screenshot-window-sizer@gnome-shell-extensions.gcampax.github.com
-- user-theme@gnome-shell-extensions.gcampax.github.com
-- window-list@gnome-shell-extensions.gcampax.github.com
-- windowsNavigator@gnome-shell-extensions.gcampax.github.com
-- workspace-indicator@gnome-shell-extensions.gcampax.github.com
-- tun0-ip-address@adamantisspinae.github.com
-- showmethetext@Guleri24.github.com
-
-### Mate desktop setup
-- Icons [https://www.wallpapertip.com/wpic/bJmxhh_mr-robot-elliot-pc/](https://www.mate-look.org/p/1012151)
-- Wallpaper https://www.wallpapertip.com/wpic/bJmxhh_mr-robot-elliot-pc/
-- Theme https://www.mate-look.org/p/1013477
-- Window borders https://github.com/adelapazborrero/DarkRobot
+The layout mirrors where files actually live, so there is no install script to
+read: everything under `config/` belongs in `~/.config/`, everything under
+`home/` belongs in `~/`.
 
 ```
-sudo apt install mate-desktop-environment
-sudo apt install mate-desktop-environment-extras
-sudo apt install lightdm lightdm-gtk-greeter
-sudo apt-get install lightdm-gtk-greeter-settings
-
-sudo update-alternatives --config x-session-manager
-
-sudo apt purge --autoremove kali-desktop-xfce
-
-cp icons /usr/share/icons/
-cp theme /usr/share/themes/
-cp background /usr/share/desktop-base/kali-theme/login/background
-
-sudo apt-get -y install aptitude
-sudo aptitude -y install mate-tweak
+config/     →  ~/.config/
+home/       →  ~/
+macos/      →  macOS-only, not used on the current machine
+themes/     →  alternate color schemes, not active
+scripts/    →  standalone tools, not tied to any config
+docs/       →  machine setup notes
 ```
 
-### Firefox setup
-1. Type `about:config`
-2. Enable `toolkit.legacyUserProfileCustomizations.stylesheets`
-3. Type `about:support`
-4. Go to your `Profile Directory`
-5. Add `https://github.com/Aris-t2/CustomCSSforFx/tree/master/current` to `chrome` (create folder if not exists)
-6. Restart firefox
+## What's here
 
-### Linux battery life
-Other new tools https://github.com/AdnanHodzic/auto-cpufreq?tab=readme-ov-file#installing-auto-cpufreq
+### Shell
 
-Update packages
-```
-sudo apt update
-```
+| Path | Installs to | Notes |
+| --- | --- | --- |
+| `home/.zshrc` | `~/.zshrc` | Aliases, small helper functions, `starship` + `zoxide` init |
+| `config/starship.toml` | `~/.config/starship.toml` | Two-line prompt, `catppuccin_frappe` palette |
 
-Install tlp
-```
-sudo apt install tlp tlp-rdw
-```
+### Terminal & multiplexing
 
-Enable daemon
-```
-sudo systemctl enable tlp.service
-```
+| Path | Installs to | Notes |
+| --- | --- | --- |
+| `config/kitty/kitty.conf` | `~/.config/kitty/kitty.conf` | Current terminal. Styled to match GNOME Ptyxis (GNOME dark palette, NotoSansM Nerd Font) |
+| `config/herdr/config.toml` | `~/.config/herdr/config.toml` | herdr terminal workspace manager — catppuccin theme, workspace switching on `prefix+ctrl+j/k` |
+| `home/.tmux.conf` | `~/.tmux.conf` | `C-a` prefix, vim-style panes. Kept around, mostly superseded by herdr |
+| `config/alacritty/alacritty.toml` | `~/.config/alacritty/alacritty.toml` | Previous terminal, kept as a fallback |
 
-Checking battery health
-```
-upower -e
-upower -i /org/freedesktop/UPower/devices/battery_BAT1
-```
-Have a look at `energy-full` and `energy-full-design`, if change is significant is time to update.
+Only the *user* config is tracked for herdr — the runtime files it drops in the
+same directory (`session.json`, `*.sock`, `*.log`) are gitignored.
 
-```
-acpi -V
-```
-Loot at `Thermal`, `desicn capacity` and `last full capacity`
+### Editors
 
+Neovim lives in its own repo: **[adelapazborrero/nvim](https://github.com/adelapazborrero/nvim)**
 
-### For mate destop small resolution
-```
-xrandr --output DP-2 --mode 3840x2160 --scale 1x1
-gsettings set org.mate.interface window-scaling-factor 1
-gsettings set org.mate.font-rendering dpi 128
-echo "For firefox open about:config, set layout.css.devPixelsPerPx to 1.4"
+```sh
+git clone git@github.com:adelapazborrero/nvim.git ~/.config/nvim
 ```
 
-### VMware on kali
+| Path | Installs to | Notes |
+| --- | --- | --- |
+| `config/zed/settings.json` | `~/.config/zed/settings.json` | Vim mode, Catppuccin Macchiato, left-docked panels |
+| `config/zed/keymap.json` | `~/.config/zed/keymap.json` | VSCode keybindings ported over |
 
-Download vmware workstation
-[https://www.vmware.com/uk/products/workstation-player.html](https://support.broadcom.com/group/ecx/productfiles?subFamily=VMware%20Workstation%20Pro&displayGroup=VMware%20Workstation%20Pro%2017.0%20for%20Personal%20Use%20(Linux)&release=17.5.2&os=&servicePk=520450&language=EN)
+### Tools
 
-Add missing packages
+| Path | Installs to | Notes |
+| --- | --- | --- |
+| `config/git/ignore` | `~/.config/git/ignore` | Global gitignore |
+| `home/.gitconfig` | `~/.gitconfig` | Identity + `nvim` as editor |
+| `config/k9s/` | `~/.config/k9s/` | Kubernetes TUI — config, resource aliases, skin |
+| `config/btop/btop.conf` | `~/.config/btop/btop.conf` | Resource monitor |
+| `config/o-tiling/config.json` | `~/.config/o-tiling/config.json` | Window tiling rules. The generated `_compiled_*` keys are stripped — o-tiling rebuilds them |
+| `home/.taskrc` | `~/.taskrc` | Taskwarrior |
+| `config/neofetch/` | `~/.config/neofetch/` | Fetch output + Pikachu ASCII art |
+
+### macOS
+
+`macos/sketchybar/` is a menu bar config from an earlier macOS setup. Not used
+on the current machine, kept for reference.
+
+### Themes
+
+Alternate color schemes that are *not* installed by default:
+
+- `themes/alacritty/alacritty_hack_the_box.toml`
+- `themes/starship/starship_hack_the_box.toml`
+- `themes/tmux/catppuccin-cobalt2.tmuxtheme`
+
+### Scripts
+
+Standalone tools in `scripts/`, not wired into any config:
+
+- `autonmap`, `incursore` — nmap automation wrappers
+- `kspray.sh` — Kerberos password spraying / DC enumeration
+- `encoder.py` — PowerShell reverse-shell payload encoder
+
+## Installing
+
+Symlink what you want:
+
+```sh
+ln -s ~/Projects/dotfiles/home/.zshrc          ~/.zshrc
+ln -s ~/Projects/dotfiles/config/starship.toml ~/.config/starship.toml
+ln -s ~/Projects/dotfiles/config/kitty         ~/.config/kitty
 ```
-sudo apt install -y build-essential linux-headers-$( uname -r ) vlan libaio1
-```
-For missing vmnet modules follow these lines from kernel
-```bash
-sudo nvim /usr/src/linux-headers-6.8.11-amd64/scripts/Makefile.modfinal
--ifdef CONFIG_DEBUG_INFO_BTF_MODULES
--        +$(if $(newer-prereqs),$(call cmd,btf_ko))
--endif
-```
 
-Activation for VM
-```
-https://github.com/massgravel/Microsoft-Activation-Scripts
+For directories that hold runtime state alongside config — `herdr`, `k9s` —
+symlink the individual file instead of the whole directory:
+
+```sh
+mkdir -p ~/.config/herdr
+ln -s ~/Projects/dotfiles/config/herdr/config.toml ~/.config/herdr/config.toml
 ```
 
-### RGB linux
-https://alternativeto.net/software/openrgb/about/
+## Dependencies
 
-### Windows GCC
-https://sourceforge.net/projects/tdm-gcc/
-Add `C:\TDM-GCC-64\bin` to the `PATH` Environment variable
+Assumed on `PATH` by `home/.zshrc` and the configs above:
 
-### Windows Installation scripts
+`zsh` · `starship` · `zoxide` · `nvim` · `kitty` · `herdr` · `lsd` ·
+`logo-ls-icons` · `kubectl` · `kubectx` · `k9s` · `docker-compose` · `gitui`
 
-https://github.com/elitekamrul/MAS
-```powershell
-irm https://elite.kamrul.us/get | iex
-# or
-irm https://massgrave.dev/get | iex
-```
+A patched **Nerd Font** (NotoSansM Nerd Font) is required for the prompt, Kitty
+and neofetch glyphs.
+
+## Machine setup notes
+
+- [Linux desktop](docs/desktop-linux.md) — GNOME extensions, MATE, battery, RGB
+- [Ultrawide display](docs/ultrawide-display.md) — 3440x1440 on a ThinkPad T480
+- [Firefox](docs/firefox.md) — custom CSS
+- [VMware on Kali](docs/vmware-kali.md)
+- [Windows](docs/windows.md) — GCC toolchain, activation scripts

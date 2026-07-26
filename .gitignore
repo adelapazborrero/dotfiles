@@ -1,0 +1,9 @@
+# herdr runtime state — only config.toml is tracked
+config/herdr/*.log
+config/herdr/*.sock
+config/herdr/session.json
+config/herdr/.plugins.lock
+
+# generated / backup config
+*.bak-*
+*~

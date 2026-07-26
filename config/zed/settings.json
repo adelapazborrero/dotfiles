@@ -1,0 +1,67 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run the `open default settings` command
+// from the command palette or from `Zed` application menu.
+{
+  "icon_theme": {
+    "mode": "light",
+    "light": "Zed (Default)",
+    "dark": "Zed (Default)"
+  },
+  "agent_servers": {
+    "claude-acp": {
+      "type": "registry",
+    },
+  },
+  "project_panel": {
+    "dock": "left",
+  },
+  "outline_panel": {
+    "dock": "left",
+  },
+  "collaboration_panel": {
+    "dock": "left",
+  },
+  "agent": {
+    "dock": "right",
+    "favorite_models": [],
+    "model_parameters": [],
+  },
+  "git_panel": {
+    "dock": "left",
+  },
+  "theme": {
+    "mode": "dark",
+    "light": "One Light",
+    "dark": "Catppuccin Macchiato (Blur) [Heavy]",
+  },
+  "show_edit_predictions": false,
+  "soft_wrap": "none",
+  "vim_mode": true,
+  "ui_font_size": 16,
+  "buffer_font_size": 16,
+  // Ported from VSCode settings.json
+  "tab_size": 2, // editor.tabSize
+  "format_on_save": "on", // editor.formatOnSave
+  "ensure_final_newline_on_save": true, // files.insertFinalNewline
+  "cursor_blink": true, // editor.cursorSmoothCaretAnimation
+  "vim": {
+    "use_system_clipboard": "always", // vim.useSystemClipboard
+  },
+  "languages": {
+    "YAML": {
+      "tab_size": 2, // r2d2 YAML is 2-space indented
+      "format_on_save": "off",
+    },
+    "C": {
+      "soft_wrap": "none",
+    },
+    "C++": {
+      "soft_wrap": "none",
+    },
+  },
+}
